@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.jorgepgjr</groupId>
-	<artifactId>netshoes-rest</artifactId>
+	<artifactId>hiring-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>netshoes-rest</name>
+	<name>hiring-test</name>
 	<description>Simple project for Netshoes Hiring process</description>
 
 	<parent>
