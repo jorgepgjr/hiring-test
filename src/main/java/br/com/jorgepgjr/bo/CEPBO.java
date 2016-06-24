@@ -20,13 +20,27 @@ import br.com.jorgepgjr.exception.CEPGenericException;
 @Component
 public class CEPBO {
 
+	private static final int CEP_MAX_LENGTH = 8;
+
 	@Autowired
 	private RestTemplate restTemplate;
 
 	String CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
 
-	public Endereco findCEP(String cep) {
-		Endereco endereco = new Endereco();
+	public Endereco findCEP(String cep){
+		int count = 0;
+		Endereco endereco = null;
+		
+		while (endereco == null || count != 3) {
+			endereco = this.callFindCEPService(cep);
+			count ++;
+//			cep = (cep.substring(0, cep.length() - count)+"000").substring(0, CEP_MAX_LENGTH);
+		}
+		return endereco;
+	}
+	
+	private Endereco callFindCEPService(String cep) {
+		Endereco endereco;
 		Map<String, String> variables = new HashMap<String, String>();
 		variables.put("cep", cep);
 		try {
