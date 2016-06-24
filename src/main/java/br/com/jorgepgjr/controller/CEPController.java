@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +42,6 @@ public class CEPController {
 		}
 
 		Endereco endereco = cepBO.findCEP(cep);
-		endereco.setBairro("Simple bairro");
 		endereco.add(linkTo(methodOn(CEPController.class).findCep(cep))
 				.withSelfRel());
 		return new ResponseEntity<Endereco>(endereco, HttpStatus.OK);
@@ -68,7 +66,7 @@ public class CEPController {
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(CEPGenericException.class)
 	@ResponseBody
-	ErrorInfo handleBadRequest(HttpServletRequest req, Exception ex) {
+	public ErrorInfo handleBadRequest(HttpServletRequest req, Exception ex) {
 		return new ErrorInfo(req.getRequestURL().toString(), ex);
 	}
 
