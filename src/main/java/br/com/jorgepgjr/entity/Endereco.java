@@ -1,5 +1,11 @@
 package br.com.jorgepgjr.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -8,18 +14,44 @@ import org.springframework.hateoas.ResourceSupport;
  * @author jorge
  *
  */
+@Entity
 public class Endereco extends ResourceSupport {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long cd;
+	@NotNull
+	private String cep;
+	@NotNull
 	private String logradouro;
+	@NotNull
 	private String complemento;
 	private String bairro;
+	@NotNull
 	private String localidade;
+	@NotNull
 	private String uf;
 
 	@Override
 	public String toString() {
-		return "Endereco [logradouro=" + logradouro + ", complemento=" + complemento + ", bairro=" + bairro
-				+ ", localidade=" + localidade + ", uf=" + uf + "]";
+		return "Endereco [cd=" + cd + ", cep=" + cep + ", logradouro=" + logradouro + ", complemento=" + complemento
+				+ ", bairro=" + bairro + ", localidade=" + localidade + ", uf=" + uf + "]";
+	}
+
+	public Long getCd() {
+		return cd;
+	}
+
+	public void setCd(Long cd) {
+		this.cd = cd;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	public String getLogradouro() {
@@ -61,4 +93,5 @@ public class Endereco extends ResourceSupport {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+	
 }

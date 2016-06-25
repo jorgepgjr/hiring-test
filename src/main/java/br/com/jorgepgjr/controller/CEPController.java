@@ -35,8 +35,14 @@ public class CEPController {
 	@Resource
 	private CEPBO cepBO;
 
+	/**
+	 * Search for an address for the CEP number
+	 * @param cep number
+	 * @return {@linkplain Endereco}
+	 */
 	@RequestMapping(value = "/cep/{cep}", method = RequestMethod.GET)
 	public HttpEntity<Endereco> findCep(@PathVariable(value = "cep") String cep) {
+		
 		if (StringUtils.isEmpty(cep)) {
 			throw new CEPGenericException("CEP informado é invalido");
 		}
@@ -52,7 +58,7 @@ public class CEPController {
 
 		ErrorInfo error = new ErrorInfo(request.getRequestURL().toString(),
 				new CEPGenericException("Tem certeza que a URL está certa?"));
-		error.add(linkTo(methodOn(CEPController.class).findCep("NUMERO-DO-CEP")).withRel("search"));
+		error.add(linkTo(methodOn(CEPController.class).findCep("11055341")).withRel("search"));
 		return new ResponseEntity<ErrorInfo>(error, HttpStatus.UNAUTHORIZED);
 	}
 
@@ -69,5 +75,4 @@ public class CEPController {
 	public ErrorInfo handleBadRequest(HttpServletRequest req, Exception ex) {
 		return new ErrorInfo(req.getRequestURL().toString(), ex);
 	}
-
 }

@@ -10,5 +10,9 @@ public class CEPGenericException extends RuntimeException{
 	public CEPGenericException(String message) {
 		super(message);
 	}
-	
+
+	public CEPGenericException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

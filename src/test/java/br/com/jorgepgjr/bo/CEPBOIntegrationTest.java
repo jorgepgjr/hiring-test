@@ -21,7 +21,6 @@ public class CEPBOIntegrationTest {
 	@Test
 	public void callCEPService() {
 		Endereco endereco = cepbo.findCEP("11055341");
-		System.out.println(endereco);
 		Assert.assertTrue("Gonzaga".equals(endereco.getBairro()));
 	}
 }

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,6 +28,8 @@ import br.com.jorgepgjr.exception.CEPGenericException;
 @RunWith(MockitoJUnitRunner.class)
 public class CEPBOTest {
 
+	private static final String CEP = "1105341";
+
 	private final String CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
 
 	@InjectMocks
@@ -34,19 +38,40 @@ public class CEPBOTest {
 	@Mock
 	private RestTemplate restTemplate;
 
+	private Endereco endereco;
+	@Before
+	public void preapre(){
+		this.endereco = new Endereco();
+		endereco.setCep(CEP);
+	}
 	/**
 	 * Simple sucess test
 	 */
 	@Test
 	public void findCEPSucessTest() {
-		String cep = "1105341";
-		Endereco endereco = new Endereco();
-
 		Map<String, String> variables = new HashMap<String, String>();
-		variables.put("cep", cep);
+		variables.put("cep", CEP);
 
 		when(restTemplate.getForObject(CEP_URL, Endereco.class, variables)).thenReturn(endereco);
-		Endereco response = cepbo.findCEP(cep);
+		Endereco response = cepbo.findCEP(CEP);
+		Assert.assertTrue(endereco.equals(response));
+	}
+	
+	/**
+	 * Simple sucess test
+	 */
+	@Test
+	@Ignore //TODO: adjust
+	public void findCEPGenericLogicTest() {
+		Map<String, String> variables = new HashMap<String, String>();
+		variables.put("cep", CEP);
+		when(restTemplate.getForObject(CEP_URL, Endereco.class, variables)).thenReturn(null);
+		
+		Map<String, String> variables2 = new HashMap<String, String>();
+		variables2.put("cep", "11055000");
+		when(restTemplate.getForObject(CEP_URL, Endereco.class, variables2)).thenReturn(endereco);
+		
+		Endereco response = cepbo.findCEP(CEP);
 		Assert.assertTrue(endereco.equals(response));
 	}
 
@@ -55,7 +80,7 @@ public class CEPBOTest {
 	 */
 	@Test(expected=CEPGenericException.class)	
 	public void findCEPExceptionTest() {
-		String cep = "1105341";
+		String cep = CEP;
 		Endereco endereco = new Endereco();
 
 		Map<String, String> variables = new HashMap<String, String>();
