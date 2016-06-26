@@ -28,7 +28,7 @@ import br.com.jorgepgjr.exception.CEPGenericException;
 @RunWith(MockitoJUnitRunner.class)
 public class CEPBOTest {
 
-	private static final String CEP = "1105341";
+	private static final String CEP = "11055341";
 
 	private final String CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
 
@@ -61,7 +61,6 @@ public class CEPBOTest {
 	 * Simple sucess test
 	 */
 	@Test
-	@Ignore //TODO: adjust
 	public void findCEPGenericLogicTest() {
 		Map<String, String> variables = new HashMap<String, String>();
 		variables.put("cep", CEP);
