@@ -24,7 +24,9 @@ import br.com.jorgepgjr.exception.CEPGenericException;
 public class CEPBO {
 
 	private static final int CEP_MAX_LENGTH = 8;
-	private static final String CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
+//	private static final String CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
+	private static final String CEP_URL_POSTMON = "http://api.postmon.com.br/v1/cep/{cep}";
+	
 	private static final Logger LOG = LoggerFactory.getLogger(CEPBO.class);
 	
 	@Autowired
@@ -37,28 +39,33 @@ public class CEPBO {
 	 * eg: Trying to search for: 12345678<br/>
 	 * if the result is null<br/>
 	 * Try to search for: 12345670<br/>
-	 * 
+	 * If no Endereco found throw CEPGenericException
 	 * @param cep
 	 * @return Endereco populated or null
 	 */
 	public Endereco findCEP(String cep) {
 		int count = 0;
 		Endereco endereco = null;
-
-		endereco = this.callFindCEPService(cep);
-		while (!this.validEndereco(endereco) && count != 3) {
+		//Removing masks
+		String cepVal = cep.replaceAll("\\D+","");
+		if (cepVal.length() != 8) {
+			throw new CEPGenericException("CEP informado é invalido");	
+		}
+		
+		endereco = this.callFindCEPService(cepVal);
+		while (!this.validEndereco(endereco) && count != 8) {
 			count++;
-			cep = (cep.substring(0, cep.length() - count) + "000").substring(0, CEP_MAX_LENGTH);
-			endereco = this.callFindCEPService(cep);
+			cepVal = (cepVal.substring(0, cepVal.length() - count) + "00000000").substring(0, CEP_MAX_LENGTH);
+			endereco = this.callFindCEPService(cepVal);
 		}
 		
 		if (!this.validEndereco(endereco)) {
-			LOG.info("No Address found for CEP {}" , cep);
-			throw new CEPGenericException("Nenhum endereço encontrado");
+			LOG.info("No Address found for CEP {}" , cepVal);
+			throw new CEPGenericException("Nenhum endereço encontrado para o CEP= "+ cep + " ou até mesmo para "+ cepVal);
 		}
 		return endereco;
 	}
-	
+
 	/**
 	 * False if {@linkplain Endereco} is empty
 	 * @param endereco
@@ -79,17 +86,24 @@ public class CEPBO {
 	 * @throws CEPGenericException
 	 */
 	private Endereco callFindCEPService(String cep) throws CEPGenericException {
-		Endereco endereco;
+		Endereco endereco = null;
 		Map<String, String> variables = new HashMap<String, String>();
 		variables.put("cep", cep);
 		try {
-			LOG.info("Calling CEP service...");
-			endereco = restTemplate.getForObject(CEP_URL, Endereco.class, variables);
+			LOG.info("Calling CEP service for cep={} ...", cep);
+			endereco = restTemplate.getForObject(this.getURLCEPService(), Endereco.class, variables);
 			LOG.info("Address found {} ",endereco);
 		} catch (HttpStatusCodeException exception) {
-			LOG.info("Error when calling CEP service", exception);
-			throw new CEPGenericException("CEP informado é invalido",exception);
+			LOG.info("Status Code of CEP service={} for CEP={}",exception.getStatusCode(), cep);
 		}
 		return endereco;
+	}
+	
+	/**
+	 * Just for testing purpose
+	 * @return
+	 */
+	private String getURLCEPService(){
+		return CEP_URL_POSTMON;
 	}
 }

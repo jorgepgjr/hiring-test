@@ -15,4 +15,10 @@ public class ErrorInfo extends ResourceSupport{
         this.url = url;
         this.msg = ex.getLocalizedMessage();
     }
+
+	public ErrorInfo(String url, String msg) {
+		this.url = url;
+		this.msg = msg;
+	}
+    
 }

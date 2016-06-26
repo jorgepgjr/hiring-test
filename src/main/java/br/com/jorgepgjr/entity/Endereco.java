@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * This is a simple POJO class that represents an Address
  * 
@@ -20,22 +22,26 @@ public class Endereco extends ResourceSupport {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long cd;
-	@NotNull
+	@NotNull(message="CEP é um campo obrigatório")
 	private String cep;
 	@NotNull
 	private String logradouro;
 	@NotNull
 	private String complemento;
 	private String bairro;
+	@JsonProperty("cidade")
 	@NotNull
 	private String localidade;
+	@NotNull
+	private String numero;
+	@JsonProperty("estado")
 	@NotNull
 	private String uf;
 
 	@Override
 	public String toString() {
 		return "Endereco [cd=" + cd + ", cep=" + cep + ", logradouro=" + logradouro + ", complemento=" + complemento
-				+ ", bairro=" + bairro + ", localidade=" + localidade + ", uf=" + uf + "]";
+				+ ", bairro=" + bairro + ", localidade=" + localidade + ", numero=" + numero + ", uf=" + uf + "]";
 	}
 
 	public Long getCd() {
@@ -93,5 +99,12 @@ public class Endereco extends ResourceSupport {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
 }
