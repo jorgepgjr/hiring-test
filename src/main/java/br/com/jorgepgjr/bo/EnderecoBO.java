@@ -29,12 +29,22 @@ public class EnderecoBO {
 	@Resource
 	private CEPBO cepBO;
 	
+	/**
+	 * Check to see if the CEP is valid then save in DataBase
+	 * @param endereco
+	 * @return
+	 */
 	@Transactional(rollbackOn=Exception.class)
 	public Endereco insert(Endereco endereco){
 		cepBO.findCEP(endereco.getCep());
 		return enderecoRepository.save(endereco);
 	}
 	
+	/**
+	 * Check if CEP is valid then if the Endereco exists in the DB, update it
+	 * @param endereco
+	 * @return
+	 */
 	@Transactional(rollbackOn=Exception.class)
 	public Endereco update(Endereco endereco){
 		cepBO.findCEP(endereco.getCep());
@@ -47,6 +57,10 @@ public class EnderecoBO {
 		return enderecoRepository.save(endereco);
 	}
 	
+	/**
+	 * Try to delete Endereco
+	 * @param cd
+	 */
 	public void delete(Long cd){
 		try {
 			enderecoRepository.delete(cd);

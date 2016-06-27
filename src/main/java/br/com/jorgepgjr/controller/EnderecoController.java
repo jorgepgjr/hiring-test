@@ -55,6 +55,10 @@ public class EnderecoController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(EnderecoController.class);
 
+	/**
+	 * Returns a list of all Enderecos stored in DataBase
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public HttpEntity<Iterable<Endereco>> findAllEndereco() {
 		LOG.info("Searching for all Adress at DataBase");
@@ -63,6 +67,11 @@ public class EnderecoController {
 		return new ResponseEntity<Iterable<Endereco>>(enderecos, HttpStatus.OK);
 	}
 
+	/**
+	 * Find {@link Endereco} for the given code
+	 * @param cod
+	 * @return
+	 */
 	@RequestMapping(value = "/{cod}", method = RequestMethod.GET)
 	public HttpEntity<Endereco> findEndereco(@PathVariable(value = "cod") Long cod) {
 		LOG.info("Searching Address code={}",cod);
@@ -74,12 +83,24 @@ public class EnderecoController {
 		return new ResponseEntity<Endereco>(endereco, HttpStatus.NO_CONTENT);
 	}
 	
+	/**
+	 * Delete {@linkplain Endereco} for the given code
+	 * @param cod
+	 * @return
+	 */
 	@RequestMapping(value = "/{cod}", method = RequestMethod.DELETE)
 	public HttpEntity<Endereco> deleteEndereco(@PathVariable(value = "cod") Long cod) {
 		enderecoBO.delete(cod);
 		return new ResponseEntity<Endereco>(HttpStatus.NO_CONTENT);
 	}
 
+	/**
+	 * Update {@linkplain Endereco} for the given code
+	 * @param cod
+	 * @param endereco
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/{cod}", method = RequestMethod.PUT)
 	public HttpEntity<Endereco> updateEndereco(@PathVariable(value = "cod") Long cod, @Valid @RequestBody Endereco endereco, BindingResult result) {
 		endereco.setCd(cod);
@@ -91,6 +112,12 @@ public class EnderecoController {
 		return new ResponseEntity<Endereco>(persitedEndereco, HttpStatus.OK);
 	}
 	
+	/**
+	 * Insert new {@linkplain Endereco}
+	 * @param endereco
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public HttpEntity<Endereco> insertEndereco(@Valid @RequestBody Endereco endereco, BindingResult result) {
 		if (endereco != null && endereco.getCd() != null ) {
@@ -107,6 +134,10 @@ public class EnderecoController {
 	}
 	
 
+	/**
+	 * Creates HATEOAS generic links
+	 * @param endereco
+	 */
 	private void createHateoasLinks(Endereco endereco){
 		endereco.add(linkTo(methodOn(EnderecoController.class).findAllEndereco()).withRel("search-all"));
 		endereco.add(linkTo(methodOn(EnderecoController.class).findEndereco(endereco.getCd())).withRel("search"));
@@ -115,6 +146,12 @@ public class EnderecoController {
 		endereco.add(linkTo(methodOn(EnderecoController.class).deleteEndereco(endereco.getCd())).withRel("delete"));
 	}
 
+	/**
+	 * Generic Error Handler
+	 * @param req
+	 * @param ex
+	 * @return
+	 */
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(EnderecoGenericException.class)
 	@ResponseBody
@@ -122,6 +159,12 @@ public class EnderecoController {
 		return new ErrorInfo(req.getRequestURL().toString(), ex);
 	}
 	
+	/**
+	 * Trying to update an Endereco  with POST method Error Handler
+	 * @param req
+	 * @param ex
+	 * @return
+	 */
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(EnderecoUpdateWithPostException.class)
 	@ResponseBody
@@ -131,6 +174,13 @@ public class EnderecoController {
 		return errorInfo;
 	}
 	
+	/**
+	 * Trying to delete a non existing value
+	 * @param req
+	 * @param ex
+	 * @param cd
+	 * @return
+	 */
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	@ResponseBody
@@ -139,6 +189,12 @@ public class EnderecoController {
 		return new ErrorInfo(req.getRequestURL().toString(), cd.toString());
 	}
 	
+	/**
+	 * Generic CEP Error Handler
+	 * @param req
+	 * @param ex
+	 * @return
+	 */
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(CEPGenericException.class)
 	@ResponseBody

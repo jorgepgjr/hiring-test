@@ -1,7 +1,7 @@
 # Hiring-test
 [![Build Status](https://travis-ci.org/jorgepgjr/hiring-test.svg?branch=master)](https://travis-ci.org/jorgepgjr/hiring-test)
 # Frameworks & Architecture
-	This Application uses Spring Boot to make configuration easy, Spring MVC to handle request and creating REST Service, Spring Data for database access, Spring Hateoas for the HATEOAS support on RESTFull WebSercices, JUnit and Mockito for testing.
+	This Application uses Spring Boot to make configuration easy, Spring MVC to handle request and creating REST Service, Spring Data for database access, Spring Hateoas for the HATEOAS support on RESTFull WebSercices, H2 as DataBase because it makes easier to setup the project (Uncomment MySql connector at pom.xml to use MySql instead of H2 DB), JUnit and Mockito for testing.
 	System Layers
 		Controllers -> Endpoints of application
 		BO			 -> Classes that are responsible to have the business logic
