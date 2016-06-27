@@ -152,7 +152,7 @@ public class EnderecoController {
 	 * @param ex
 	 * @return
 	 */
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(EnderecoGenericException.class)
 	@ResponseBody
 	public ErrorInfo badRequestErrorHandler(HttpServletRequest req, Exception ex) {
@@ -165,7 +165,7 @@ public class EnderecoController {
 	 * @param ex
 	 * @return
 	 */
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(EnderecoUpdateWithPostException.class)
 	@ResponseBody
 	public ErrorInfo enderecoUpdateWithPostErrorHandler(HttpServletRequest req, EnderecoUpdateWithPostException ex) {
@@ -181,7 +181,7 @@ public class EnderecoController {
 	 * @param cd
 	 * @return
 	 */
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	@ResponseBody
 	public ErrorInfo deleteNotFoundErrorHandler(HttpServletRequest req, Exception ex, Long cd) {
@@ -195,7 +195,7 @@ public class EnderecoController {
 	 * @param ex
 	 * @return
 	 */
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(CEPGenericException.class)
 	@ResponseBody
 	public ErrorInfo handleBadRequest(HttpServletRequest req, Exception ex) {

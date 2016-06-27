@@ -59,7 +59,7 @@ public class CEPController {
 		ErrorInfo error = new ErrorInfo(request.getRequestURL().toString(),
 				new CEPGenericException("Tem certeza que a URL está certa?"));
 		error.add(linkTo(methodOn(CEPController.class).findCep("11055341")).withRel("search"));
-		return new ResponseEntity<ErrorInfo>(error, HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<ErrorInfo>(error, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class CEPController {
 	 * @param ex
 	 * @return
 	 */
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(CEPGenericException.class)
 	@ResponseBody
 	public ErrorInfo handleBadRequest(HttpServletRequest req, Exception ex) {
