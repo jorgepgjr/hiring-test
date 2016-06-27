@@ -10,9 +10,10 @@ All Services are running by default at `http://localhost:8080`
 	URI : GET /cep/{cep_number}
 	Example:
 	 /cep/11055341
-Return:
-
+	 
+* **Sucess Response:**
 * **Code:** 200 OK
+* **Content:** 
 ```json 
 {
 	"cd": null,
@@ -31,10 +32,59 @@ Return:
 }
 ```
 * **Error Response:**
+* * **URL:** /cep/wefwef
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** 
 ```json
-{"url":"http://localhost:8080/cep/wefwef","msg":"CEP informado é invalido","links":[]}
+{
+	"url":"http://localhost:8080/cep/wefwef",
+	"msg":"CEP informado é invalido",
+	"links":[]
+}
 ```
 
 ## Endereco Service
+	URI : GET /endereco
+	Example:
+	 /endereco
+	Shows all Enderecos
+	
+	URI : GET /endereco/{id}
+	Example:
+	 /endereco/1
+	Shows Enderecos with id={id}
+	
+	URI : POST /endereco
+	Example:
+	 /endereco
+	 Body:
+```json	 
+	 {
+		  "cep": "11044333",
+		  "complemento": "de 67/68 ao fim",
+		  "bairro": "Gonzaga",
+		  "cidade": "Santos",
+		  "estado": "SP",
+		  "logradouro":"Rua x",
+		  "numero":"7"
+	}
+```	
+	URI : PUT /endereco/{id}
+	Example:
+	 /endereco/1
+	Updates Endereco with id = 1
+```json	 
+	 {
+		  "cep": "11044333",
+		  "complemento": "de 67/68 ao fim",
+		  "bairro": "Gonzaga",
+		  "cidade": "Santos",
+		  "estado": "SP",
+		  "logradouro":"Rua x",
+		  "numero":"8"
+	}
+```
+	URI : DELETE /endereco/{id}
+	Example:
+	 /endereco/1
+	Delete Endereco with id = 1
