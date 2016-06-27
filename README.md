@@ -41,7 +41,7 @@ All Services are running by default at `http://localhost:8080`
 ```
 * **Error Response:**
 * * **URL:** /cep/wefwef
-  * **Code:** 401 UNAUTHORIZED <br />
+  * **Code:** 400 BAD REQUEST <br />
     **Content:** 
 ```json
 {
