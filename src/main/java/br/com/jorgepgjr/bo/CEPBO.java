@@ -24,9 +24,7 @@ import br.com.jorgepgjr.exception.CEPGenericException;
 public class CEPBO {
 
 	private static final int CEP_MAX_LENGTH = 8;
-//	private static final String CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
-	private static final String CEP_URL_POSTMON = "http://api.postmon.com.br/v1/cep/{cep}";
-	
+	private static final String CEP_URL = "http://api.postmon.com.br/v1/cep/{cep}"; //TODO: Set on a properties file
 	private static final Logger LOG = LoggerFactory.getLogger(CEPBO.class);
 	
 	@Autowired
@@ -91,19 +89,11 @@ public class CEPBO {
 		variables.put("cep", cep);
 		try {
 			LOG.info("Calling CEP service for cep={} ...", cep);
-			endereco = restTemplate.getForObject(this.getURLCEPService(), Endereco.class, variables);
+			endereco = restTemplate.getForObject(CEP_URL, Endereco.class, variables);
 			LOG.info("Address found {} ",endereco);
 		} catch (HttpStatusCodeException exception) {
 			LOG.info("Status Code of CEP service={} for CEP={}",exception.getStatusCode(), cep);
 		}
 		return endereco;
-	}
-	
-	/**
-	 * Just for testing purpose
-	 * @return
-	 */
-	private String getURLCEPService(){
-		return CEP_URL_POSTMON;
 	}
 }

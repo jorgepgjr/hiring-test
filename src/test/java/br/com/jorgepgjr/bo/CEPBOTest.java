@@ -28,8 +28,7 @@ import br.com.jorgepgjr.exception.CEPGenericException;
 public class CEPBOTest {
 
 	private static final String CEP = "11055341";
-
-	private final String CEP_URL = "https://viacep.com.br/ws/{cep}/json/";
+	private final String CEP_URL = "http://api.postmon.com.br/v1/cep/{cep}";
 
 	@InjectMocks
 	private CEPBO cepbo;
