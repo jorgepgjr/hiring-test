@@ -1,9 +1,17 @@
 # Hiring-test
 [![Build Status](https://travis-ci.org/jorgepgjr/hiring-test.svg?branch=master)](https://travis-ci.org/jorgepgjr/hiring-test)
+# Frameworks & Architecture
+	This Application uses Spring Boot to make configuration easy, Spring MVC to handle request and creating REST Service, Spring Data for database access, Spring Hateoas for the HATEOAS support on RESTFull WebSercices, JUnit and Mockito for testing.
+	System Layers
+		Controllers -> Endpoints of application
+		BO			 -> Classes that are responsible to have the business logic
+		Repository  -> Classes to access database (DAOs)
+
 # Running
 Make sure you have [maven](https://maven.apache.org/) installed and at the root folder of the project, run:
 
 	mvn spring-boot:run
+
 
 All Services are running by default at `http://localhost:8080` 
 ## CEP Service
@@ -47,12 +55,12 @@ All Services are running by default at `http://localhost:8080`
 	URI : GET /endereco
 	Example:
 	 /endereco
-	Shows all Enderecos
+	Shows all Endereços
 	
 	URI : GET /endereco/{id}
 	Example:
 	 /endereco/1
-	Shows Enderecos with id={id}
+	Shows Endereços with id={id}
 	
 	URI : POST /endereco
 	Example:
@@ -72,7 +80,7 @@ All Services are running by default at `http://localhost:8080`
 	URI : PUT /endereco/{id}
 	Example:
 	 /endereco/1
-	Updates Endereco with id = 1
+	Updates Endereço with id = 1
 ```json	 
 	 {
 		  "cep": "11044333",
@@ -87,4 +95,4 @@ All Services are running by default at `http://localhost:8080`
 	URI : DELETE /endereco/{id}
 	Example:
 	 /endereco/1
-	Delete Endereco with id = 1
+	Delete Endereço with id = 1
