@@ -1,11 +1,17 @@
 package br.com.jorgepgjr.question3;
 
-public class Question3 implements Stream{
+
+/**
+ * Implementation of {@linkplain Stream}
+ * @author jorge
+ *
+ */
+public class StreamImpl implements Stream{
+	
 	private String input;
 	private int count;
 	
-	
-	public Question3(String input) {
+	public StreamImpl(String input) {
 		super();
 		this.input = input;
 		this.count = 0;
@@ -13,14 +19,13 @@ public class Question3 implements Stream{
 
 	@Override
 	public char getNext() {
-		if (this.hasNext()) {
-			input.charAt(count);
-		}
-		return 0;
+		return input.charAt(count++);
+		
 	}
 
 	@Override
 	public boolean hasNext() {
-		return !(input.length() == count+1); 
+		return input.length() > count; 
 	}
+	
 }
